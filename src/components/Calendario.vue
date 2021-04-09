@@ -4,7 +4,7 @@
       <v-sheet height="64">
         <v-toolbar flat>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
-            Today
+            Hoy
           </v-btn>
           <v-btn class="mr-4" color="primary" dark @click="dialog = true">
             Agregar
@@ -28,16 +28,16 @@
             </template>
             <v-list>
               <v-list-item @click="type = 'day'">
-                <v-list-item-title>Day</v-list-item-title>
+                <v-list-item-title>Día</v-list-item-title>
               </v-list-item>
               <v-list-item @click="type = 'week'">
-                <v-list-item-title>Week</v-list-item-title>
+                <v-list-item-title>Semana</v-list-item-title>
               </v-list-item>
               <v-list-item @click="type = 'month'">
-                <v-list-item-title>Month</v-list-item-title>
+                <v-list-item-title>Mes</v-list-item-title>
               </v-list-item>
               <v-list-item @click="type = '4day'">
-                <v-list-item-title>4 days</v-list-item-title>
+                <v-list-item-title>4 días</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -54,7 +54,6 @@
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
-          :weekdays="[1, 2, 3, 4, 5, 6, 0]"
           locale="es"
           :short-weekdays="false"
         ></v-calendar>
@@ -109,8 +108,8 @@
         >
           <v-card color="grey lighten-4" min-width="350px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
+              <v-btn icon @click="deleteEvent(selectedEvent)">
+                <v-icon>mdi-delete</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
@@ -121,12 +120,47 @@
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </v-toolbar>
+
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <v-form v-if="currentlyEditing !== selectedEvent.id">
+                {{ selectedEvent.name }} - {{ selectedEvent.details }}
+              </v-form>
+
+              <v-form v-if="currentlyEditing === selectedEvent.id">
+                <v-text-field
+                  type="text"
+                  v-model="selectedEvent.name"
+                  label="Editar Nombre"
+                ></v-text-field>
+
+                <textarea-autosize
+                  v-model="selectedEvent.details"
+                  type="text"
+                  style="width: 100%"
+                  :min-height="100"
+                ></textarea-autosize>
+              </v-form>
             </v-card-text>
+
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">
                 Cancel
+              </v-btn>
+              <v-btn
+                v-if="currentlyEditing !== selectedEvent.id"
+                text
+                color="secondary"
+                @click.prevent="editEvent(selectedEvent)"
+              >
+                Editar
+              </v-btn>
+              <v-btn
+                text
+                v-if="currentlyEditing === selectedEvent.id"
+                color="secondary"
+                @click.prevent="updateEvent(selectedEvent)"
+              >
+                Guardar
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -143,10 +177,10 @@ export default {
     focus: "",
     type: "month",
     typeToLabel: {
-      month: "Month",
-      week: "Week",
-      day: "Day",
-      "4day": "4 Days",
+      month: "Mes",
+      week: "Semana",
+      day: "Día",
+      "4day": "4 Días",
     },
     selectedEvent: {},
     selectedElement: null,
@@ -186,6 +220,22 @@ export default {
     this.getEvents();
   },
   methods: {
+    async updateEvent(event) {
+      try {
+        await db.collection("eventos").doc(event.id).update({
+          name: event.name,
+          details: event.details,
+        });
+
+        this.selectedOpen = false;
+        this.currentlyEditing = null;
+      } catch (error) {
+        console.log("error found,", error);
+      }
+    },
+    editEvent({ id }) {
+      this.currentlyEditing = id;
+    },
     async addEvent() {
       try {
         if (this.name && this.start && this.end) {
@@ -289,6 +339,15 @@ export default {
 
     //   this.events = events;
     // },
+    async deleteEvent(event) {
+      try {
+        await db.collection("eventos").doc(event.id).delete();
+        this.selectedOpen = false;
+        this.getEvents();
+      } catch (error) {
+        console.log("error found,", error);
+      }
+    },
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
