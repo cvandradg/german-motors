@@ -217,7 +217,6 @@ export default {
     this.$refs.calendar.checkChange();
   },
   created() {
-    console.log('created')
     this.getEvents();
   },
   methods: {
