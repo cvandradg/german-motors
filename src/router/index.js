@@ -19,7 +19,7 @@ const routes = [
     component: HelloWorld,
   },
   {
-    path: "/page",
+    path: "/",
     name: "LandingPage",
     component: LandingPage,
   },
