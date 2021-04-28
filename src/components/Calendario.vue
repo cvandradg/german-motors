@@ -1,5 +1,8 @@
 <template>
-  <v-row class="fill-height">
+<div>
+  
+</div>
+  <!-- <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat>
@@ -56,10 +59,10 @@
           @click:date="viewDay"
           locale="es"
           :short-weekdays="false"
-        ></v-calendar>
+        ></v-calendar> -->
 
         <!-- Modal menu -->
-        <v-dialog v-model="dialog">
+        <!-- <v-dialog v-model="dialog">
           <v-card>
             <v-container>
               <v-form @submit.prevent="addEvent">
@@ -167,7 +170,7 @@
         </v-menu>
       </v-sheet>
     </v-col>
-  </v-row>
+  </v-row> -->
 </template>
 <script>
 import { db } from "../main";
