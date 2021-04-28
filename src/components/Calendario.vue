@@ -1,7 +1,5 @@
 <template>
-<div>
-  
-</div>
+  <div></div>
   <!-- <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
@@ -61,8 +59,8 @@
           :short-weekdays="false"
         ></v-calendar> -->
 
-        <!-- Modal menu -->
-        <!-- <v-dialog v-model="dialog">
+  <!-- Modal menu -->
+  <!-- <v-dialog v-model="dialog">
           <v-card>
             <v-container>
               <v-form @submit.prevent="addEvent">

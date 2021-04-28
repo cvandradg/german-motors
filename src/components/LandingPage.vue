@@ -936,13 +936,9 @@
   </div>
 </template>
 <script>
-
-
 export default {
   name: "LandingPage",
-  components: {
-
-  },
+  components: {},
   data: () => ({}),
   mounted() {},
   created() {},

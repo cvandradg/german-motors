@@ -1,7 +1,5 @@
 <template>
-<div>
-  
-</div>
+  <div></div>
   <!-- <v-app-bar>
     <v-btn depressed text small color="grey darken-2 m-4.">
       <router-link to="/calendario"><div>calendario</div></router-link>
@@ -15,7 +13,5 @@
   </v-app-bar> -->
 </template>
 <script>
-export default {
-  
-}
+export default {};
 </script>
