@@ -1,17 +1,18 @@
 <template>
-  <v-app>
-    <Calendario />
-  </v-app>
+  <main>
+    <navbar></navbar>
+    <router-view></router-view>
+  </main>
 </template>
 
 <script>
-import Calendario from "./components/Calendario";
+import navbar from "./components/navbar.vue";
 
 export default {
   name: "App",
 
   components: {
-    Calendario,
+    navbar,
   },
 
   data: () => ({

@@ -1,23 +1,27 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+import Calendario from "../components/Calendario.vue";
+import HelloWorld from "../components/HelloWorld.vue";
+import LandingPage from "../components/LandingPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: "/calendario",
+    name: "calendario",
+    component: Calendario,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/helloWorld",
+    name: "HelloWorld",
+    component: HelloWorld,
+  },
+  {
+    path: "/page",
+    name: "LandingPage",
+    component: LandingPage,
   },
 ];
 
