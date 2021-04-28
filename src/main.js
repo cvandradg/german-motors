@@ -2,9 +2,13 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import vuetify from "./plugins/vuetify";
+// import vuetify from "./plugins/vuetify";
 
-// import VueTextareaAutosize from "vue-textarea-autosize";
+import axios from "axios";
+import VueAxios from "vue-axios";
+
+import VueTextareaAutosize from "vue-textarea-autosize";
+Vue.use(VueTextareaAutosize);
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -24,9 +28,17 @@ export const db = firebase.firestore();
 
 Vue.config.productionTip = false;
 
+Vue.use(VueAxios, axios);
+
+Vue.component("LandingPage", function (resolve) {
+  axios.get("index.html").then((response) => {
+    resolve({ template: response.data });
+  });
+});
+
 new Vue({
   router,
   store,
-  vuetify,
+  // vuetify,
   render: (h) => h(App),
 }).$mount("#app");
